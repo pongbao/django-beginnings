@@ -6,3 +6,9 @@ git add <file>
 
 # commit
 git commit -m "<message>"
+
+# send the commit to repository
+git push
+
+# update local repository
+git pull
