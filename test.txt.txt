@@ -1,8 +1,0 @@
-# clone
-git clone <git link>
-
-# add files to commit
-git add <file>
-
-# commit
-git commit -m "<message>"
