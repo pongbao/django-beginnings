@@ -1,0 +1,9 @@
+/* global styles */
+body {
+    font-family: sans-serif;
+    color: black;
+    background-color: pink;
+}
+li a {
+    color: green;
+}

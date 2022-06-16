@@ -1,0 +1,132 @@
+# create a project
+
+`django-admin startproject mysite .`
+
+# outer mysite/ root directory
+
+- is a container for your project. Its name doesn’t matter to Django; you can rename it to anything you like.
+
+# manage.py
+
+- command-line utility that lets you interact with this Django project in various ways. You can read all the details about manage.py (https://docs.Djangoproject.com/en/4.0/ref/Django-admin/).
+
+# inner mysite/ directory
+
+- actual Python package for your project
+- its name is the Python package name you’ll need to use to import anything inside it (e.g. mysite.urls).
+
+# mysite/**init**.py
+
+- empty file that tells Python that this directory should be considered a Python package (https://docs.python.org/3/tutorial/modules.html#tut-packages)
+
+# mysite/settings.py
+
+- settings/configuration for this Django project (https://docs.Djangoproject.com/en/4.0/topics/settings/)
+
+# mysite/urls.py
+
+- URL declarations for this Django project; a “table of contents” of your Django-powered site (https://docs.Djangoproject.com/en/4.0/topics/http/urls/)
+
+# mysite/asgi.py
+
+- entry-point for ASGI-compatible web servers to serve your project (https://docs.Djangoproject.com/en/4.0/howto/deployment/asgi/)
+
+# mysite/wsgi.py
+
+- entry-point for WSGI-compatible web servers to serve your project (https://docs.Djangoproject.com/en/4.0/howto/deployment/wsgi/)
+
+# run a server
+
+https://docs.Djangoproject.com/en/4.0/ref/Django-admin/#Django-admin-runserver
+`py manage.py runserver`
+`py manage.py runserver <port>`
+
+# create an app
+
+`py manage.py startapp polls`
+
+# create database per app
+
+- the migrate command looks at the INSTALLED_APPS setting and creates any necessary database tables according to the database settings in your mysite/settings.py file and the database migrations shipped with the app
+  `py manage.py migrate`
+- Django apps are “pluggable”: You can use an app in multiple projects, and you can distribute apps, because they don’t have to be tied to a given Django installation
+- apply changes in the migrations to the database
+
+# migration
+
+- storing changes in the models (including making new ones) as a migration
+  `py manage.py makemigrations polls`
+- create migration for changes
+
+# sqlmigrate
+
+- takes migration names and returns their sql
+  `py manage.py sqlmigrate polls 0001`
+
+# check issues before migration
+
+`py manage.py check`
+
+# Django api
+
+`py manage.py shell`
+
+# save object into database
+
+object.save()
+
+# model registration
+
+- register models in the `admin.py` file so that the app could be displayed in the admin page and the objects could have an admin interface.
+
+# views
+
+- a view is a type of webpage that serves a specific function and has a specific template
+- URLconfs map URL patterns to views (https://docs.Djangoproject.com/en/4.0/topics/http/urls/)
+
+# template namespacing
+
+- Django will choose the first template it finds whose name matches, and if you had a template with the same name in a different application, Django would be unable to distinguish between them. We need to be able to point Django at the right one, and the best way to ensure this is by namespacing them. That is, by putting those templates inside another directory named for the application itself.
+- use {% xxx %} to input code, {{xxx}} for variable
+- https://docs.Djangoproject.com/en/4.0/topics/templates/
+- For example, the polls app has a detail view, and so might an app on the same project that is for a blog. How does one make it so that Django knows which app view to create for a url when using the {% url %} template tag? The answer is to add namespaces to your URLconf. In the polls/urls.py file, go ahead and add an app_name to set the application namespace.
+
+# testing
+
+- test apps using test.py in each app
+  `py manage.py test <app_name>`
+
+## views
+
+- install a template renderer which will allow us to examine some additional attributes on responses such as response.context
+- this method does not set up a test database, so the following will be run against the existing database and the output may differ slightly depending on what questions you already created
+  `from django.test.utils import setup_test_environment`
+  `setup_test_environment()`
+  `from django.test import Client`
+- create an instance of client (does not need to be done in the tests.py file since the TestCase class already comes with its own client)
+  `client = Client()`
+- use http response
+  `client.get('<app>/')`
+- get status code
+  ` response.status_code`
+- import reverse for http browsing
+  `from django.urls import reverse`
+- get response from client
+- namespacing not allowed for direct 'get'
+  `response = client.get(reverse('<app>:<html file>'))`
+- get context as defined in views.py
+  `reponse.context[<context_object_name>]`
+
+# Find django in the system
+
+`python -c "import django; print(django.__path__)"`
+
+- C:\Users\torre\AppData\Local\Programs\Python\Python310\Lib\site-packages\django\contrib\admin\templates
+
+# apps and packages can be reusable
+
+- https://djangopackages.org/
+- build the package by running inside the project directory
+  `py setup.py sdist`
+- install the package
+  `python -m pip install --user django-polls/dist/django-polls-0.1.tar.gz`

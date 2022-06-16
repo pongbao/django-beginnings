@@ -1,0 +1,10 @@
+{% extends "admin/base.html" %}
+
+<!-- modify admin page html -->
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | ZT admin{% endblock %}'
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Polls administration</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
