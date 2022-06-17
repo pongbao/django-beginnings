@@ -12,3 +12,6 @@ git push
 
 # update local repository
 git pull
+
+# create a new branch
+git checkout -b <project name>
